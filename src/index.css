@@ -1,0 +1,9 @@
+.images-viewer{
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.images-viewer img{
+    margin-left: 10px;
+    margin-right: 10px;
+}

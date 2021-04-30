@@ -1,0 +1,28 @@
+.files-list{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 2rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.files-list__item{
+  aspect-ratio: 1;
+  background-color: lightgray;
+  outline: darkgray 1px solid;
+  cursor: pointer;
+
+  transition: outline 100ms;
+}
+
+.files-list__item.selected{
+  outline-color: blueviolet;
+  outline-width: 3px;
+}
+
+.files-list__item img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
