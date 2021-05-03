@@ -1,56 +1,60 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useRef} from 'react';
 import './FileManager.css';
 
-interface Props<Type> {
-    filesList: Array<Type>;
-    onFileSelected?: Function;
-    multiple ?: boolean,
-    child: any
+import FileList from "./FileList";
+import FileViewer from "./FileViewer";
+import {IFile} from "./interfaces";
+import FileManagerProvider, {useEvents} from "./FileManagerContext";
+import {FileManagerEventsType} from "./FileManagerEvents";
+import FileActions from "./FileActions";
+
+
+const files: Array<IFile> = [
+    {url: "https://picsum.photos/id/350/200/300", width: 250},
+    {url: "https://picsum.photos/id/351/250/300", width: 250},
+    {url: "https://picsum.photos/id/352/300/200", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/354/200/300", width: 250}
+]
+
+
+function Image({file}: { file?: IFile }) {
+    return (
+        <>
+            {file && (
+                <img src={file.url} alt=""/>
+            )}
+        </>
+    )
 }
 
-function FileManager<Type>({filesList, onFileSelected, multiple = true, child}: Props<Type>) {
-    const [selectedFiles, setSelectedFiles] = useState<Set<Type>>(new Set());
+function FileManager() {
 
-    const toggleSelectedFile = (file: Type) =>{
-        const tempSet = new Set<Type>([
-                ...selectedFiles
-            ]
-        );
-
-        if(multiple){
-            if(tempSet.has(file)){
-                tempSet.delete(file);
-            }else{
-                tempSet.add(file);
-            }
-        }else{
-            if(tempSet.has(file)){
-                tempSet.clear();
-            }else{
-                tempSet.clear();
-                tempSet.add(file);
-            }
-        }
-
-        setSelectedFiles(tempSet);
-    }
+    const onFilesRemoved = ((files:Array<IFile>)=>{
+        console.log("ON VEUT SUPPRIMER DES FICHIERS: ", files);
+    })
 
     return (
-        <div className="files-list">
-            {filesList.map((file, index) => {
-                return (
-                <div
-                    className={"files-list__item " + (selectedFiles.has(file) ? "selected" : "") }
-                    key={index}
-                    onClick={e=>toggleSelectedFile(file)}
-                >
-                    {React.createElement(child, {file})}
+        <div className="file-manager">
+            <FileManagerProvider files={files}>
+                <div className="file-manager__body">
+                    <FileList
+                        child={Image}
+                    />
+                    <FileViewer
+                        child={Image}
+                    />
                 </div>
-            )})}
-
-            <button type="button" onClick={e=>onFileSelected ? onFileSelected([...selectedFiles]) : null}>Valider</button>
+                <div className="file-manager__footer">
+                    <FileActions onFilesRemoved={onFilesRemoved}/>
+                </div>
+            </FileManagerProvider>
         </div>
     )
 }
 
-export default FileManager
+export default FileManager;
