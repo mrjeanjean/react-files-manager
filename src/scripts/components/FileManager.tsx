@@ -1,11 +1,9 @@
-import React, {useContext, useRef} from 'react';
-import './FileManager.css';
+import React from 'react';
 
 import FileList from "./FileList";
 import FileViewer from "./FileViewer";
-import {IFile} from "./interfaces";
-import FileManagerProvider, {useEvents} from "./FileManagerContext";
-import {FileManagerEventsType} from "./FileManagerEvents";
+import {IFile} from "../interfaces";
+import FileManagerProvider from "../FileManagerContext";
 import FileActions from "./FileActions";
 
 
@@ -18,6 +16,17 @@ const files: Array<IFile> = [
     {url: "https://picsum.photos/id/353/300/300", width: 250},
     {url: "https://picsum.photos/id/353/300/300", width: 250},
     {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/300", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
+    {url: "https://picsum.photos/id/353/300/150", width: 250},
     {url: "https://picsum.photos/id/354/200/300", width: 250}
 ]
 

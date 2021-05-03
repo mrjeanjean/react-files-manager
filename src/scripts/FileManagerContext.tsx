@@ -40,7 +40,7 @@ function FileManagerProvider({children, files}: FileManagerContextProviderProps)
         return ()=> {
             events.remove(FileManagerEventsType.select, onFilesSelectionChanged);
         }
-    }, [])
+    })
 
     return (
         <FileManagerContext.Provider value={{files: files, events: eventsRef.current, filesSelected: filesSelected}}>

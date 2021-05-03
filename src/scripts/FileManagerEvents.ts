@@ -40,7 +40,6 @@ class FileManagerEvents{
      * @param {Object} data
      */
     public fire(type: FileManagerEventsType, data:any){
-        console.log(this.observers);
         this.observers.forEach(entry=>{
             if(entry.type === type){
                 entry.callback(data);

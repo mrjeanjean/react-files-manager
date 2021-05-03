@@ -1,13 +1,9 @@
-import React, {useState} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import FileManager from "./FileManager";
+import './../styles/index.scss';
+import FileManager from "./components/FileManager";
 
 function Main() {
-
-    const onUpdate = (data:any)=>{
-        console.log(data)
-    }
     return (
         <div>
             <FileManager/>

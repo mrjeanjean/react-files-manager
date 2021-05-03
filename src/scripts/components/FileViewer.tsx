@@ -1,7 +1,6 @@
 import React from "react";
-import "./FileViewer.css";
 
-import {useSelectedFiles} from "./FileManagerContext";
+import {useSelectedFiles} from "./../FileManagerContext";
 
 interface FileViewerProps{
     child: React.ElementType
