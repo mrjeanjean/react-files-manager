@@ -1,13 +1,12 @@
 import React from "react";
-import "./FileViewer.css";
 
 import {useSelectedFiles} from "./FileManagerContext";
 
 interface FileViewerProps{
-    child: React.ElementType
+    child?: React.ElementType
 }
 
-function FileViewer({child}: FileViewerProps){
+function FileViewer(){
     const files = useSelectedFiles();
 
     return (

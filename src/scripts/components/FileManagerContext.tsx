@@ -1,6 +1,6 @@
 import React, {createContext, ReactNode, useContext, useEffect, useRef, useState} from "react";
-import {FileManagerContextProps, IFile} from "./interfaces";
-import FileManagerEvents, {FileManagerEventsType} from "./FileManagerEvents";
+import {FileManagerContextProps, IFile} from "../interfaces";
+import FileManagerEvents, {FileManagerEventsType} from "../FileManagerEvents";
 
 export const FileManagerContext = createContext<FileManagerContextProps>({
     files: [] as Array<IFile>,
@@ -40,7 +40,7 @@ function FileManagerProvider({children, files}: FileManagerContextProviderProps)
         return ()=> {
             events.remove(FileManagerEventsType.select, onFilesSelectionChanged);
         }
-    }, [])
+    })
 
     return (
         <FileManagerContext.Provider value={{files: files, events: eventsRef.current, filesSelected: filesSelected}}>

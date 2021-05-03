@@ -1,6 +1,5 @@
 import React from "react";
-import './FileActions.css';
-import {useFiles, useSelectedFiles} from "./FileManagerContext";
+import {useSelectedFiles} from "./FileManagerContext";
 
 interface FileActionsProps{
     onFilesRemoved: Function
