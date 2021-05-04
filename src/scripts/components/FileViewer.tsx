@@ -1,13 +1,16 @@
 import React from "react";
 
-import {useSelectedFiles} from "./FileManagerContext";
+import {useStoreState} from "../store/filemanager.hooks";
+import {FileManagerModel} from "../store/filemanager.store";
+import {State} from "easy-peasy";
+import {IFile} from "../interfaces";
 
 interface FileViewerProps{
     child?: React.ElementType
 }
 
 function FileViewer(){
-    const files = useSelectedFiles();
+    const files = useStoreState((state: State<FileManagerModel<IFile>>)=>state.selectedFiles);
 
     return (
         <div className="file-viewer">

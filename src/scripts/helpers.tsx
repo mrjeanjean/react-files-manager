@@ -5,4 +5,14 @@ export function useStateWithCallback<T>(initialState: T, callback: Function): [T
     useEffect(() => callback(state), [state]);
 
     return [state, setState];
-};
+}
+
+export function arrayHas<T>(collection: Array<T>, item: T): boolean {
+    return collection.some((entry: T) => item === entry);
+}
+
+export function arrayRemove<T>(collection: Array<T>, item: T) {
+    return collection.filter((entry: T) => {
+        return entry !== item;
+    })
+}

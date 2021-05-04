@@ -1,20 +1,13 @@
 import React from "react";
-import {useSelectedFiles} from "./FileManagerContext";
 
 interface FileActionsProps{
-    onFilesRemoved: Function
+    onFilesSelection: Function
 }
 
-function FileActions({onFilesRemoved}:FileActionsProps){
-    const selectedFiles = useSelectedFiles();
-
-    const dispatchSelectedFiles = ()=>{
-        onFilesRemoved(selectedFiles);
-    }
-
+function FileActions(){
     return (
         <div className="file-manager__actions">
-            <button type="button" onClick={dispatchSelectedFiles}>Selectionner</button>
+            <button type="button">Selectionner</button>
         </div>
     )
 }
