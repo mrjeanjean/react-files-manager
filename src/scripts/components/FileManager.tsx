@@ -7,6 +7,7 @@ import {IFile} from "../interfaces";
 
 import {StoreProvider} from "easy-peasy";
 import {createFileManagerStore} from "../store/filemanager.store";
+import FileManagerEvents from "../FileManagerEvents";
 
 
 function Image({file}: { file?: IFile }) {
@@ -20,12 +21,18 @@ function Image({file}: { file?: IFile }) {
 }
 
 interface FileManagerProps<T>{
-    files: Array<T>
+    files: Array<T>,
+    allowMultipleSelection?: boolean,
+    eventEmitter?:FileManagerEvents
 }
 
-function FileManager({files}:FileManagerProps<IFile>) {
+function FileManager({files, allowMultipleSelection = false, eventEmitter = new FileManagerEvents()}:FileManagerProps<IFile>) {
 
-    const store = createFileManagerStore<IFile>(files);
+    const store = createFileManagerStore<IFile>(
+        files,
+        eventEmitter,
+        allowMultipleSelection
+    );
 
     return (
         <div className="file-manager">

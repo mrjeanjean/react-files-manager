@@ -5,5 +5,4 @@ import {IFile} from "../interfaces";
 const typedHooks = createTypedHooks<FileManagerModel<IFile>>();
 
 export const useStoreActions = typedHooks.useStoreActions;
-export const useStoreDispatch = typedHooks.useStoreDispatch;
 export const useStoreState = typedHooks.useStoreState;

@@ -1,17 +1,20 @@
-import {action, Action, createStore} from "easy-peasy";
+import {action, Action, createStore, State} from "easy-peasy";
 import {arrayHas, arrayRemove} from "../helpers";
+import FileManagerEvents, {FileManagerEventsType} from "../FileManagerEvents";
 
 export interface FileManagerModel<T> {
     files: Array<T>;
     selectedFiles: Array<T>;
     allowMultipleSelection: boolean;
     toggleSelectedFile: Action<FileManagerModel<T>, T>;
+    dispatchEvent: Action<FileManagerModel<T>, FileManagerEventsType>;
+    eventsEmitter: FileManagerEvents
 }
 
-export function createFileManagerStore<T>(initialFiles: Array<T> = []) {
+export function createFileManagerStore<T>(initialFiles: Array<T> = [], events: FileManagerEvents, allowMultipleSelection: boolean) {
     const fileManagerModel: FileManagerModel<T> = {
         files: initialFiles,
-        allowMultipleSelection: true,
+        allowMultipleSelection: allowMultipleSelection,
         selectedFiles: [] as Array<T>,
         toggleSelectedFile: action((state, file) => {
             const newState = {...state};
@@ -30,6 +33,17 @@ export function createFileManagerStore<T>(initialFiles: Array<T> = []) {
             }
 
             return newState;
+        }),
+        eventsEmitter: events,
+        dispatchEvent: action((state: State<FileManagerModel<T>>, eventType: FileManagerEventsType) => {
+            if(eventType === FileManagerEventsType.select){
+                state.eventsEmitter.fire(FileManagerEventsType.select, state.selectedFiles);
+            }
+
+            if(eventType === FileManagerEventsType.delete){
+                state.eventsEmitter.fire(FileManagerEventsType.delete, state.selectedFiles);
+            }
+            return state;
         })
     };
     return createStore(fileManagerModel, {disableImmer: true});

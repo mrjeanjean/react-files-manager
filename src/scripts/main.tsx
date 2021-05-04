@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './../styles/index.scss';
 import FileManager from "./components/FileManager";
 import {IFile} from "./interfaces";
+import FileManagerEvents, {FileManagerEventsType} from "./FileManagerEvents";
 
 const files: Array<IFile> = [
     {url: "https://picsum.photos/id/350/200/300", width: 250},
@@ -28,9 +29,19 @@ const files: Array<IFile> = [
 ]
 
 function Main() {
+    const eventEmitter = new FileManagerEvents();
+
+    eventEmitter.add(FileManagerEventsType.select, (data:any)=>{
+        console.log("ON VA SELECTIONNER : ", data);
+    });
+
+    eventEmitter.add(FileManagerEventsType.delete, (data:any)=>{
+        console.log("ON VA SUPPRIMER : ", data);
+    });
+
     return (
         <div>
-            <FileManager files={files}/>
+            <FileManager files={files} allowMultipleSelection={false} eventEmitter={eventEmitter}/>
         </div>
     )
 }

@@ -9,7 +9,7 @@ interface IFileManagerEvents{
 }
 
 /**
- * Class representing events fired by PageSlider
+ * Class representing events fired by FileManager
  */
 class FileManagerEvents{
     observers: Array<IFileManagerEvents>;
