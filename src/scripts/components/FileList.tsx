@@ -13,8 +13,8 @@ interface FileListProps {
 
 function FileList({child}: FileListProps) {
 
-    const files = useStoreState((state: State<FileManagerModel<IFile>>)=>state.files);
-    const selectedFiles = useStoreState((state: State<FileManagerModel<IFile>>)=>state.selectedFiles);
+    const files = useStoreState((state: State<FileManagerModel<IFile>>) => state.files);
+    const selectedFiles = useStoreState((state: State<FileManagerModel<IFile>>) => state.selectedFiles);
     const toggleSelectedFile = useStoreActions(actions => actions.toggleSelectedFile);
 
     return (
@@ -24,7 +24,9 @@ function FileList({child}: FileListProps) {
                     <div
                         className={"file-list__item " + (arrayHas<IFile>(selectedFiles, file) ? "selected" : "")}
                         key={index}
-                        onClick={() => toggleSelectedFile(file)}
+                        onClick={() => {
+                            toggleSelectedFile(file)
+                        }}
                     >
                         {React.createElement(child, {file})}
                     </div>

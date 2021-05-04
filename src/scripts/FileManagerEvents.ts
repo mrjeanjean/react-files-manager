@@ -11,7 +11,7 @@ interface IFileManagerEvents{
 /**
  * Class representing events fired by FileManager
  */
-class FileManagerEvents{
+class FileManagerEventEmitter{
     observers: Array<IFileManagerEvents>;
 
     public constructor() {
@@ -48,4 +48,4 @@ class FileManagerEvents{
     }
 }
 
-export default FileManagerEvents;
+export default FileManagerEventEmitter;

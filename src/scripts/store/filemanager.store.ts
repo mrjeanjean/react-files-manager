@@ -1,6 +1,6 @@
 import {action, Action, createStore, State} from "easy-peasy";
 import {arrayHas, arrayRemove} from "../helpers";
-import FileManagerEvents, {FileManagerEventsType} from "../FileManagerEvents";
+import FileManagerEventEmitter, {FileManagerEventsType} from "../FileManagerEvents";
 
 export interface FileManagerModel<T> {
     files: Array<T>;
@@ -8,10 +8,10 @@ export interface FileManagerModel<T> {
     allowMultipleSelection: boolean;
     toggleSelectedFile: Action<FileManagerModel<T>, T>;
     dispatchEvent: Action<FileManagerModel<T>, FileManagerEventsType>;
-    eventsEmitter: FileManagerEvents
+    eventsEmitter: FileManagerEventEmitter
 }
 
-export function createFileManagerStore<T>(initialFiles: Array<T> = [], events: FileManagerEvents, allowMultipleSelection: boolean) {
+export function createFileManagerStore<T>(initialFiles: Array<T> = [], events: FileManagerEventEmitter, allowMultipleSelection: boolean) {
     const fileManagerModel: FileManagerModel<T> = {
         files: initialFiles,
         allowMultipleSelection: allowMultipleSelection,

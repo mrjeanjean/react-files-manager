@@ -16,3 +16,7 @@ export function arrayRemove<T>(collection: Array<T>, item: T) {
         return entry !== item;
     })
 }
+
+export function withPlural(collection: Array<any>, singular: string, plural: string){
+    return collection.length > 1 ? plural : singular;
+}

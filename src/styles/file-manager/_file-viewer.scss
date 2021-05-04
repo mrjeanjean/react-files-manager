@@ -1,4 +1,8 @@
 .file-viewer{
   background-color: lightgray;
   border-left: 1px solid dimgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
