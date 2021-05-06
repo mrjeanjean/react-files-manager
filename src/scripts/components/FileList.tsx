@@ -1,9 +1,7 @@
 import React from "react";
 
-import {IFile} from "../interfaces";
 import {arrayHas} from "../helpers";
-import {useStoreActions, useStoreState} from "../store/filemanager.hooks";
-import {State} from "easy-peasy";
+import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
 import {FileManagerModel} from "../store/filemanager.store";
 
 interface FileListProps {
@@ -11,18 +9,18 @@ interface FileListProps {
     child: React.ElementType
 }
 
-function FileList({child}: FileListProps) {
+function FileList<T>({child}: FileListProps) {
 
-    const files = useStoreState((state: State<FileManagerModel<IFile>>) => state.files);
-    const selectedFiles = useStoreState((state: State<FileManagerModel<IFile>>) => state.selectedFiles);
-    const toggleSelectedFile = useStoreActions(actions => actions.toggleSelectedFile);
+    const files = useStoreState((state: State<FileManagerModel<T>>) => state.files);
+    const selectedFiles = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
+    const toggleSelectedFile = useStoreActions((actions: Actions<FileManagerModel<T>>) => actions.toggleSelectedFile);
 
     return (
         <div className="file-list-wrapper">
             <div className="file-list">
                 {files.map((file, index) => (
                     <div
-                        className={"file-list__item " + (arrayHas<IFile>(selectedFiles, file) ? "selected" : "")}
+                        className={"file-list__item " + (arrayHas<T>(selectedFiles, file) ? "selected" : "")}
                         key={index}
                         onClick={() => {
                             toggleSelectedFile(file)

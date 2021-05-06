@@ -1,10 +1,11 @@
 import React from "react";
-import {useStoreActions} from "../store/filemanager.hooks";
 import {FileManagerEventsType} from "../FileManagerEvents";
+import {Actions, useStoreActions} from "easy-peasy";
+import {FileManagerModel} from "../store/filemanager.store";
 
-function FileActions(){
+function FileActions<T>(){
 
-    const dispatchEvent = useStoreActions((store)=>store.dispatchEvent)
+    const dispatchEvent = useStoreActions((store:Actions<FileManagerModel<T>>)=>store.dispatchEvent)
 
     return (
         <div className="file-manager__actions">

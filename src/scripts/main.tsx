@@ -1,9 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './../styles/index.scss';
+
 import FileManager from "./components/FileManager";
 import {IFile} from "./interfaces";
 import FileManagerEventEmitter, {FileManagerEventsType} from "./FileManagerEvents";
+import FileList from "./components/FileList";
+import FileViewer from "./components/FileViewer";
+import FileActions from "./components/FileActions";
+import FileManagerBody from "./components/FileManagerBody";
+import FileManagerFooter from "./components/FileManagerFooter";
 
 const files: Array<IFile> = [
     {url: "https://picsum.photos/id/350/200/300", width: 250},
@@ -28,8 +34,18 @@ const files: Array<IFile> = [
     {url: "https://picsum.photos/id/354/200/300", width: 250}
 ]
 
-function Main() {
 
+function Image({file}: { file?: IFile }) {
+    return (
+        <>
+            {file && (
+                <img src={file.url} alt=""/>
+            )}
+        </>
+    )
+}
+
+function Main() {
     const getEmitter = (eventEmitter: FileManagerEventEmitter) => {
         eventEmitter.add(FileManagerEventsType.select, (data: any) => {
             console.log("ON VA SELECTIONNER : ", data);
@@ -42,7 +58,21 @@ function Main() {
 
     return (
         <div>
-            <FileManager files={files} allowMultipleSelection={true} getEmitter={getEmitter}/>
+            <FileManager<IFile>
+                files={files}
+                allowMultipleSelection={true}
+                getEmitter={getEmitter}
+            >
+                <FileManagerBody>
+                    <FileList child={Image}/>
+                    <FileViewer/>
+                </FileManagerBody>
+
+                <FileManagerFooter>
+                    <FileActions/>
+                </FileManagerFooter>
+
+            </FileManager>
         </div>
     )
 }

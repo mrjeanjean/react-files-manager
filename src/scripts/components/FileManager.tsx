@@ -9,24 +9,14 @@ import {StoreProvider} from "easy-peasy";
 import {createFileManagerStore} from "../store/filemanager.store";
 import FileManagerEventEmitter from "../FileManagerEvents";
 
-
-function Image({file}: { file?: IFile }) {
-    return (
-        <>
-            {file && (
-                <img src={file.url} alt=""/>
-            )}
-        </>
-    )
-}
-
 interface FileManagerProps<T>{
     files: Array<T>,
     allowMultipleSelection?: boolean,
-    getEmitter?:((eventEmitter:FileManagerEventEmitter)=>void)
+    getEmitter?:((eventEmitter:FileManagerEventEmitter)=>void),
+    children: Array<JSX.Element>
 }
 
-function FileManager({files, allowMultipleSelection = false, getEmitter}:FileManagerProps<IFile>) {
+function FileManager<T>({files, allowMultipleSelection = false, getEmitter, children}:FileManagerProps<T>) {
 
     const eventEmitter = new FileManagerEventEmitter();
 
@@ -34,7 +24,7 @@ function FileManager({files, allowMultipleSelection = false, getEmitter}:FileMan
         getEmitter(eventEmitter);
     }
 
-    const store = createFileManagerStore<IFile>(
+    const store = createFileManagerStore<T>(
         files,
         eventEmitter,
         allowMultipleSelection
@@ -44,13 +34,7 @@ function FileManager({files, allowMultipleSelection = false, getEmitter}:FileMan
     return (
         <div className="file-manager">
             <StoreProvider store={store}>
-                <div className="file-manager__body">
-                    <FileList child={Image}/>
-                    <FileViewer/>
-                </div>
-                <div className="file-manager__footer">
-                    <FileActions/>
-                </div>
+                {children}
             </StoreProvider>
         </div>
     )

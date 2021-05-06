@@ -1,9 +1,7 @@
 import React from "react";
 
-import {useStoreActions, useStoreState} from "../store/filemanager.hooks";
 import {FileManagerModel} from "../store/filemanager.store";
-import {State} from "easy-peasy";
-import {IFile} from "../interfaces";
+import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
 import {FileManagerEventsType} from "../FileManagerEvents";
 import {withPlural} from "../helpers";
 
@@ -11,9 +9,9 @@ interface FileViewerProps {
     child?: React.ElementType
 }
 
-function FileViewer() {
-    const files = useStoreState((state: State<FileManagerModel<IFile>>) => state.selectedFiles);
-    const dispatchEvent = useStoreActions((store) => store.dispatchEvent)
+function FileViewer<T>() {
+    const files = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
+    const dispatchEvent = useStoreActions((store:Actions<FileManagerModel<T>>) => store.dispatchEvent)
 
     return (
         <div className="file-viewer">
