@@ -6,19 +6,19 @@ import FileActions from "./FileActions";
 import {IFile} from "../interfaces";
 
 import {StoreProvider} from "easy-peasy";
-import {createFileManagerStore} from "../store/filemanager.store";
-import FileManagerEventEmitter from "../FileManagerEvents";
+import {createFileManagerStore} from "../store/filemanager-store";
+import FileManagerEventsEmitter from "../filemanager-events";
 
 interface FileManagerProps<T>{
     files: Array<T>,
     allowMultipleSelection?: boolean,
-    getEmitter?:((eventEmitter:FileManagerEventEmitter)=>void),
+    getEmitter?:((eventEmitter:FileManagerEventsEmitter)=>void),
     children: Array<JSX.Element>
 }
 
 function FileManager<T>({files, allowMultipleSelection = false, getEmitter, children}:FileManagerProps<T>) {
 
-    const eventEmitter = new FileManagerEventEmitter();
+    const eventEmitter = new FileManagerEventsEmitter();
 
     if(getEmitter){
         getEmitter(eventEmitter);

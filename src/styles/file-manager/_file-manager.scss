@@ -5,7 +5,7 @@
 }
 
 .file-manager__body{
-  display: grid;
-  grid-template-columns: 1fr 350px;
+  display: flex;
+  justify-content: space-between;
   height: 520px;
 }

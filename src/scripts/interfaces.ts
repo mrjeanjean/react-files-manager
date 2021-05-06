@@ -1,8 +1,9 @@
-import FileManagerEvents from "./FileManagerEvents";
+import FileManagerEvents from "./filemanager-events";
 
 export interface IFile {
     url: string,
-    width?: number
+    width?: number,
+    path?: string
 }
 
 export interface FileManagerContextProps {

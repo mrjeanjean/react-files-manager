@@ -2,7 +2,7 @@ import React from "react";
 
 import {arrayHas} from "../helpers";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
-import {FileManagerModel} from "../store/filemanager.store";
+import {FileManagerModel} from "../store/filemanager-store";
 
 interface FileListProps {
     onFileSelected?: Function;
@@ -17,6 +17,7 @@ function FileList<T>({child}: FileListProps) {
 
     return (
         <div className="file-list-wrapper">
+            Total de fichiers : {files.length}
             <div className="file-list">
                 {files.map((file, index) => (
                     <div

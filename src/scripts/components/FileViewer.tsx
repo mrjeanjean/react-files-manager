@@ -1,8 +1,8 @@
 import React from "react";
 
-import {FileManagerModel} from "../store/filemanager.store";
+import {FileManagerModel} from "../store/filemanager-store";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
-import {FileManagerEventsType} from "../FileManagerEvents";
+import {FileManagerEventsType} from "../filemanager-events";
 import {withPlural} from "../helpers";
 
 interface FileViewerProps {

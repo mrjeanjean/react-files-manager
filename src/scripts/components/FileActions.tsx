@@ -1,7 +1,7 @@
 import React from "react";
-import {FileManagerEventsType} from "../FileManagerEvents";
+import {FileManagerEventsType} from "../filemanager-events";
 import {Actions, useStoreActions} from "easy-peasy";
-import {FileManagerModel} from "../store/filemanager.store";
+import {FileManagerModel} from "../store/filemanager-store";
 
 function FileActions<T>(){
 
