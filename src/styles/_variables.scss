@@ -1,0 +1,19 @@
+.file-manager{
+  --file-manager-primary-color: #45c5fa;
+  --file-manager-text-color: #263238;
+  --file-manager-light-color: #fff;
+  --file-manager-medium-color: #f3f3f3;
+  --file-manager-border-color: #e0e0e0;
+
+  --file-manager-font-size-medium: 18px;
+
+  --file-manager-height: 520px;
+
+  --file-viewer-color: var(--file-manager-light-color);
+  --file-list-color: var(--file-manager-medium-color);
+  --file-source-tree-color: var(--file-manager-light-color);
+
+  --file-list-selected-color: var(--file-manager-primary-color);
+  --file-list-gap: 1.5rem;
+  --file-list-padding: 1.5rem;
+}

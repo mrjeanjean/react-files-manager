@@ -17,7 +17,7 @@ function FileViewer<T>() {
         <div className="file-viewer">
             <span>{files.length} {withPlural(files, "fichier sélectionné", "fichiers sélectionnés")}</span>
             {files.length > 0 && (
-                <button onClick={() => dispatchEvent(FileManagerEventsType.delete)}>Tout supprimer</button>
+                <button onClick={() => dispatchEvent(FileManagerEventsType.delete)} className="button--action">Tout supprimer</button>
             )}
         </div>
     )

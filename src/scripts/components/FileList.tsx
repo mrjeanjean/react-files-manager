@@ -17,7 +17,6 @@ function FileList<T>({child}: FileListProps) {
 
     return (
         <div className="file-list-wrapper">
-            Total de fichiers : {files.length}
             <div className="file-list">
                 {files.map((file, index) => (
                     <div

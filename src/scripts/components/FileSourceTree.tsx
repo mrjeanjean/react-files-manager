@@ -4,33 +4,49 @@ import {FileManagerModel} from "../store/filemanager-store";
 
 interface ChildProps {
     path: string,
+    name: string,
     children?: Array<ChildProps>
 }
 
 interface NodeProps {
     node: ChildProps,
+    currentPath: string,
     onClick: (path: string) => void,
-    path?: string
 }
 
-function Node({node, onClick, path = ""}: NodeProps) {
+function Node({node, onClick, currentPath}: NodeProps) {
 
-    const [open, setOpen] = useState<boolean>(true);
+    const [open, setOpen] = useState<boolean>(false);
 
     const toggleOpen = () => {
         setOpen(!open);
     }
 
+    const openNode = () => {
+        setOpen(true);
+    }
+
     return (
-        <div>
-            <button onClick={e => {
-                onClick(path + node.path);
-                toggleOpen()
-            }}>{`${node.path}`}</button>
+        <div className={"file-source-tree__node" + (open ? " is-open" : "") + ((currentPath === node.path) ? " is-selected" : "")}>
+            <div className="file-source-tree__label">
+                {node.children && (
+                    <button
+                        className="file-source-tree__arrow"
+                        onClick={()=>toggleOpen()}
+                    />
+                )}
+                <button
+                    className="file-source-tree__button"
+                    onClick={() => {
+                        onClick(node.path);
+                        openNode();
+                    }}
+                >{`${node.name}`}</button>
+            </div>
             {node.children && (
                 <ul hidden={!open}>
                     {node.children.map((child: ChildProps, index: number) => (
-                        <Node key={index} node={child} onClick={onClick} path={`${path}${node.path}`}/>
+                        <Node key={index} node={child} onClick={onClick} currentPath={currentPath}/>
                     ))}
                 </ul>
             )}
@@ -69,6 +85,7 @@ export default function FileSourceTree<T extends { path: string }>({tree}: FileS
                         setPath(path)
                     }
                 }
+                currentPath={path}
             />
         </div>
     )

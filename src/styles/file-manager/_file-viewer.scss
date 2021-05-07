@@ -1,9 +1,9 @@
 .file-viewer{
-  background-color: lightgray;
-  border-left: 1px solid dimgray;
+  background-color: var(--file-source-tree-color);
+  //border-left: 2px solid var(--file-manager-border-color);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-basis: 350px;
+  flex-basis: 280px;
 }

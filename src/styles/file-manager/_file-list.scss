@@ -1,8 +1,8 @@
 .file-list-wrapper {
   overflow-y: auto;
   height: 100%;
-  background-color: lightgray;
-  padding: 1.5rem;
+  background-color: var(--file-list-color);
+  padding: var(--file-list-padding);
   box-sizing: border-box;
   flex: 1 auto;
 }
@@ -10,14 +10,14 @@
 .file-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  grid-gap: 1.5rem;
+  grid-gap: var(--file-list-gap);
   align-items: flex-start;
   align-self: flex-start;
 }
 
 .file-list__item {
-  background-color: lightgray;
-  outline: darkgray 1px solid;
+  background-color: var(--file-manager-light-color);
+  outline: var(--file-manager-border-color) 1px solid;
   cursor: pointer;
   position: relative;
   padding-bottom: 100%;
@@ -26,8 +26,8 @@
 }
 
 .file-list__item.selected {
-  outline-color: blueviolet;
-  outline-width: 3px;
+  outline-color: var(--file-manager-primary-color);
+  outline-width: 4px;
 }
 
 .file-list__item img {

@@ -1,3 +1,61 @@
 .file-source-tree{
   flex-basis: 200px;
+  background-color: var(--file-source-tree-color);
+  padding-left: 2rem;
+  font-size: 16px;
+  padding-top: 2rem;
+}
+
+.file-source-tree ul{
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  padding: 0 0 0 1rem;
+}
+
+.file-source-tree__label{
+  display: flex;
+  position: relative;
+  text-align: left;
+  padding: 0.25rem 0.1rem;
+  border-bottom-left-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.file-source-tree__arrow{
+  position: absolute;
+  background-color: transparent;
+  transition: transform 100ms;
+  height: 100%;
+  right: 100%;
+  width: 1rem;
+  top: 0;
+}
+
+.file-source-tree__arrow:before{
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 0 4px 5px;
+  border-color: transparent transparent transparent var(--file-manager-text-color);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -2px;
+  margin-top: -4px;
+}
+
+.file-source-tree__button{
+  background-color: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.file-source-tree__node.is-open > * > .file-source-tree__arrow{
+  transform: rotate(90deg);
+}
+
+.file-source-tree__node.is-selected > .file-source-tree__label{
+  background-color: var(--file-manager-medium-color);
 }
