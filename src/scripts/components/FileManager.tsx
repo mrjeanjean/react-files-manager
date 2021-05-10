@@ -1,35 +1,32 @@
 import React from 'react';
 
-import FileList from "./FileList";
-import FileViewer from "./FileViewer";
-import FileActions from "./FileActions";
-import {IFile} from "../interfaces";
-
-import {StoreProvider} from "easy-peasy";
-import {createFileManagerStore} from "../store/filemanager-store";
+import {Actions, StoreProvider} from "easy-peasy";
+import {createFileManagerStore, FileManagerModel} from "../store/filemanager-store";
 import FileManagerEventsEmitter from "../filemanager-events";
+import {FileAction} from "../store/file-manager-actions";
 
 interface FileManagerProps<T>{
     files: Array<T>,
     allowMultipleSelection?: boolean,
-    getEmitter?:((eventEmitter:FileManagerEventsEmitter)=>void),
-    children: Array<JSX.Element>
+    getEventsEmitter?:((eventEmitter:FileManagerEventsEmitter)=>void),
+    children: Array<JSX.Element>,
+    fileActions?: Array<FileAction<T>>
 }
 
-function FileManager<T>({files, allowMultipleSelection = false, getEmitter, children}:FileManagerProps<T>) {
+function FileManager<T>({files, allowMultipleSelection = false, getEventsEmitter, children, fileActions}:FileManagerProps<T>) {
 
-    const eventEmitter = new FileManagerEventsEmitter();
+    const fileManagerEventsEmitter = new FileManagerEventsEmitter();
 
-    if(getEmitter){
-        getEmitter(eventEmitter);
+    if(getEventsEmitter){
+        getEventsEmitter(fileManagerEventsEmitter);
     }
 
     const store = createFileManagerStore<T>(
         files,
-        eventEmitter,
-        allowMultipleSelection
+        fileManagerEventsEmitter,
+        allowMultipleSelection,
+        fileActions
     );
-
 
     return (
         <div className="file-manager">

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {arrayHas} from "../helpers";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
@@ -11,7 +11,7 @@ interface FileListProps {
 
 function FileList<T>({child}: FileListProps) {
 
-    const files = useStoreState((state: State<FileManagerModel<T>>) => state.files);
+    const files = useStoreState((state: State<FileManagerModel<T>>) => state.filteredFiles);
     const selectedFiles = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
     const toggleSelectedFile = useStoreActions((actions: Actions<FileManagerModel<T>>) => actions.toggleSelectedFile);
 
