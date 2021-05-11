@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FileTreeNodeType} from "./index";
+import {FileTreeNodeType} from "./file-tree.types";
 
 interface FileTreeNodeProps {
     node: FileTreeNodeType,
@@ -7,6 +7,9 @@ interface FileTreeNodeProps {
     onClick: (path: string) => void,
 }
 
+/**
+ * Represents a file tree node
+ */
 export function FileTreeNode({node, onClick, currentPath}: FileTreeNodeProps) {
 
     const [open, setOpen] = useState<boolean>(false);

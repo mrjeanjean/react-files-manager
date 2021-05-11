@@ -1,7 +1,6 @@
 import {
     action,
     Action,
-    Actions,
     Computed,
     computed,
     createStore,
@@ -10,8 +9,8 @@ import {
     thunk,
 } from "easy-peasy";
 import {arrayHas, arrayRemove} from "../helpers";
-import FileManagerEventEmitter, {FileManagerEventsType} from "../filemanager-events";
-import {FileAction, FileActionPayload, FileActionsManager, FileManagerActionsTypes} from "./file-manager-actions";
+import {FileActionPayload, FileActionType} from "../actions/actions.types";
+import {createFileActionsManager} from "../actions/create-file-actions";
 
 export interface FileManagerModel<T> {
     files: Array<T>;
@@ -19,7 +18,6 @@ export interface FileManagerModel<T> {
     filteredFiles: Computed<FileManagerModel<T>, Array<T>>
     allowMultipleSelection: boolean;
     toggleSelectedFile: Action<FileManagerModel<T>, T>;
-    eventsEmitter: FileManagerEventEmitter,
     filesMiddlewares: Array<Function>,
     addFilesMiddleware: Action<FileManagerModel<T>, Function>,
     removeFilesMiddleware: Action<FileManagerModel<T>, Function>,
@@ -29,12 +27,11 @@ export interface FileManagerModel<T> {
 
 export function createFileManagerStore<T>(
     files: Array<T> = [],
-    eventsEmitter: FileManagerEventEmitter,
     allowMultipleSelection: boolean,
-    fileActions: Array<FileAction<T>> = []
+    fileActions: Array<FileActionType<T>> = []
 ) {
 
-    const {addAction, dispatchActionFromType} = FileActionsManager<T>();
+    const {addAction, dispatchActionFromType} = createFileActionsManager<T>();
     fileActions.forEach(action=>addAction(action.type, action.callback));
 
     const fileManagerModel: FileManagerModel<T> = {
@@ -73,7 +70,6 @@ export function createFileManagerStore<T>(
 
             return newState;
         }),
-        eventsEmitter: eventsEmitter,
         filesMiddlewares: [] as Array<Function>,
         addFilesMiddleware: action((state: State<FileManagerModel<T>>, middleware: Function) => {
             const newState = {...state};
@@ -88,7 +84,10 @@ export function createFileManagerStore<T>(
             return newState;
         }),
         applyFileActions: thunk((actions, payload: FileActionPayload, {getState}) => {
-            dispatchActionFromType(payload.type, payload.payload, actions, getState())
+            dispatchActionFromType(payload.type, payload.payload, {
+                actions: actions,
+                state: getState()
+            })
         }),
     };
     return createStore(fileManagerModel, {disableImmer: true});

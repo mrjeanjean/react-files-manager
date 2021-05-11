@@ -3,16 +3,18 @@ import ReactDOM from 'react-dom';
 import './../styles/index.scss';
 
 import FileManager from "./components/FileManager";
-import {IFile} from "./interfaces";
 import FileList from "./components/FileList";
 import FileViewer from "./components/FileViewer";
-import FileActions from "./components/FileActions";
 import FileManagerBody from "./components/FileManagerBody";
 import FileManagerFooter from "./components/FileManagerFooter";
-import {Actions, State} from "easy-peasy";
-import {FileManagerModel} from "./store/filemanager-store";
-import {FileActionPayload, FileManagerActionsTypes} from "./store/file-manager-actions";
 import FileTree from './file-tree/FileTree';
+import {FileActionType, FileManagerAction} from "./actions/actions.types";
+
+export interface IFile {
+    url: string,
+    width?: number,
+    path?: string
+}
 
 const originalFiles: Array<IFile> = [
     {url: "https://picsum.photos/id/350/200/300", width: 250, path: "/pictures/"},
@@ -83,21 +85,17 @@ function Image({file}: { file?: IFile }) {
     )
 }
 
-const fileActions = [
+const fileActions:Array<FileActionType<IFile>> = [
     {
-        type: FileManagerActionsTypes.selectFiles,
-        callback: (data:FileActionPayload, actions:Actions<FileManagerModel<IFile>>, state:State<FileManagerModel<IFile>>)=>{
+        type: FileManagerAction.selectFiles,
+        callback: (data)=>{
             console.log("ON SELECTIONNE DES IMAGES !", data)
-            actions.fetchFiles([
-                {url: "https://picsum.photos/id/5/600/150", width: 250, path: "/"},
-                ...state.files
-            ])
         }
     },
     {
-        type: FileManagerActionsTypes.deleteFiles,
-        callback: (data:FileActionPayload, actions:Actions<FileManagerModel<IFile>>, state:State<FileManagerModel<IFile>>)=>{
-            console.log("ON REMOVE DES IMAGES !", data)
+        type: FileManagerAction.deleteFiles,
+        callback: (data, {actions, state})=>{
+            console.log("ON REMOVE DES IMAGES ALEATOIREMENT !", data)
             actions.fetchFiles(
                 state.files.filter((file, index)=>index>0)
             );
@@ -119,10 +117,7 @@ function Main() {
                     <FileViewer/>
                 </FileManagerBody>
 
-                <FileManagerFooter>
-                    <FileActions/>
-                </FileManagerFooter>
-
+                <FileManagerFooter/>
             </FileManager>
         </div>
     )

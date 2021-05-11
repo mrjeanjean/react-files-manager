@@ -2,14 +2,12 @@ import React from "react";
 
 import {FileManagerModel} from "../store/filemanager-store";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
-import {FileManagerEventsType} from "../filemanager-events";
 import {withPlural} from "../helpers";
-import {FileManagerActionsTypes} from "../store/file-manager-actions";
+import {FileManagerAction} from "../actions/actions.types";
 
-interface FileViewerProps {
-    child?: React.ElementType
-}
-
+/**
+ * Display current selected files
+ */
 function FileViewer<T>() {
     const selectedFiles = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
     const applyFileActions = useStoreActions((store:Actions<FileManagerModel<T>>)=>store.applyFileActions);
@@ -20,7 +18,7 @@ function FileViewer<T>() {
             {selectedFiles.length > 0 && (
                 <button
                 type="button"
-                onClick={()=>applyFileActions({type: FileManagerActionsTypes.deleteFiles, payload: selectedFiles})}
+                onClick={()=>applyFileActions({type: FileManagerAction.deleteFiles, payload: selectedFiles})}
                 className="button--action"
                 >Supprimer</button>
             )}

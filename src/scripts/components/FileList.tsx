@@ -1,14 +1,18 @@
-import React, {useEffect} from "react";
+import React from "react";
 
 import {arrayHas} from "../helpers";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
 import {FileManagerModel} from "../store/filemanager-store";
 
 interface FileListProps {
-    onFileSelected?: Function;
     child: React.ElementType
+    onFileSelected?: Function;
 }
 
+/**
+ * Display list of files
+ * @param {JSX.Element} child - must be passed to display the thumbnail
+ */
 function FileList<T>({child}: FileListProps) {
 
     const files = useStoreState((state: State<FileManagerModel<T>>) => state.filteredFiles);

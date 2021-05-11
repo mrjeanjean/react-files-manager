@@ -1,13 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {Actions, useStoreActions} from "easy-peasy";
 import {FileManagerModel} from "../store/filemanager-store";
-import {FileTreeNodeType} from "./";
+import {FileTreeNodeType} from "./file-tree.types";
 import {FileTreeNode} from "./FileTreeNode";
 
 interface FileTreeProps {
     fileTree: FileTreeNodeType
 }
 
+/**
+ * Main entry of file tree structure
+ */
 export default function FileTree<T extends { path: string }>({fileTree}: FileTreeProps) {
     const addFilesMiddleware = useStoreActions((store: Actions<FileManagerModel<T>>) => store.addFilesMiddleware);
     const removeFilesMiddleware = useStoreActions((store: Actions<FileManagerModel<T>>) => store.removeFilesMiddleware);
