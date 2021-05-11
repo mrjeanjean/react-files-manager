@@ -4,16 +4,15 @@ import './../styles/index.scss';
 
 import FileManager from "./components/FileManager";
 import {IFile} from "./interfaces";
-import FileManagerEventEmitter, {FileManagerEventsType} from "./filemanager-events";
 import FileList from "./components/FileList";
 import FileViewer from "./components/FileViewer";
 import FileActions from "./components/FileActions";
 import FileManagerBody from "./components/FileManagerBody";
 import FileManagerFooter from "./components/FileManagerFooter";
-import FileSourceTree from "./components/FileSourceTree";
 import {Actions, State} from "easy-peasy";
 import {FileManagerModel} from "./store/filemanager-store";
 import {FileActionPayload, FileManagerActionsTypes} from "./store/file-manager-actions";
+import FileTree from './file-tree/FileTree';
 
 const originalFiles: Array<IFile> = [
     {url: "https://picsum.photos/id/350/200/300", width: 250, path: "/pictures/"},
@@ -38,7 +37,7 @@ const originalFiles: Array<IFile> = [
     {url: "https://picsum.photos/id/354/200/300", width: 250, path: "/files/"}
 ]
 
-const tree = {
+const fileTree = {
     path: "/",
     name: "My files",
     children: [
@@ -115,7 +114,7 @@ function Main() {
                 fileActions={fileActions}
             >
                 <FileManagerBody>
-                    <FileSourceTree tree={tree}/>
+                    <FileTree fileTree={fileTree}/>
                     <FileList child={Image}/>
                     <FileViewer/>
                 </FileManagerBody>
