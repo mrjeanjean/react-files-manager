@@ -17,26 +17,26 @@ export interface IFile {
 }
 
 const originalFiles: Array<IFile> = [
-    {url: "https://picsum.photos/id/350/200/300", width: 250, path: "/pictures/"},
-    {url: "https://picsum.photos/id/351/250/300", width: 250, path: "/pictures/"},
-    {url: "https://picsum.photos/id/352/300/200", width: 250, path: "/pictures/2021/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/pictures/2021/may/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/230/300/150", width: 250, path: "/pictures/2021/april/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", width: 250, path: "/"},
-    {url: "https://picsum.photos/id/354/200/300", width: 250, path: "/files/"}
+    {url: "https://picsum.photos/id/350/200/300", path: "/pictures/"},
+    {url: "https://picsum.photos/id/351/250/300", path: "/pictures/"},
+    {url: "https://picsum.photos/id/352/300/200", path: "/pictures/2021/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/pictures/2021/may/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/"},
+    {url: "https://picsum.photos/id/353/300/300", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/230/300/150", path: "/pictures/2021/april/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/354/200/300", path: "/files/"}
 ]
 
 const fileTree = {
@@ -74,7 +74,6 @@ const fileTree = {
     ]
 }
 
-
 function Image({file}: { file?: IFile }) {
     return (
         <>
@@ -85,20 +84,17 @@ function Image({file}: { file?: IFile }) {
     )
 }
 
-const fileActions:Array<FileActionType<IFile>> = [
+const fileActions: Array<FileActionType<IFile>> = [
     {
         type: FileManagerAction.selectFiles,
-        callback: (data)=>{
-            console.log("ON SELECTIONNE DES IMAGES !", data)
+        callback: (data) => {
+            console.log("ON SELECTIONNE DES IMAGES !", data);
         }
     },
     {
         type: FileManagerAction.deleteFiles,
-        callback: (data, {actions, state})=>{
-            console.log("ON REMOVE DES IMAGES ALEATOIREMENT !", data)
-            actions.fetchFiles(
-                state.files.filter((file, index)=>index>0)
-            );
+        callback: (data) => {
+            console.log("ON REMOVE DES IMAGES !", data);
         }
     }
 ]
@@ -127,5 +123,5 @@ ReactDOM.render(
     <React.StrictMode>
         <Main/>
     </React.StrictMode>,
-    document.getElementById('root')
+    document.getElementById('file-manager')
 )

@@ -10,22 +10,27 @@ import {
 } from "easy-peasy";
 import {arrayHas, arrayRemove} from "../helpers";
 import {FileActionPayload, FileActionType} from "../actions/actions.types";
-import {createFileActionsManager} from "../actions/create-file-actions";
+import {createFileActionsManager} from "../actions/create-file-actions-manager";
+import {createFileFiltersManager} from "../filters/create-file-filters-manager";
+import {getDefaultFileFilters} from "../filters/default-file-filters";
 
-export interface FileManagerModel<T> {
+export interface FileType {
+    path ?: string
+}
+
+export interface FileManagerModel<T extends FileType> {
     files: Array<T>;
     selectedFiles: Array<T>;
     filteredFiles: Computed<FileManagerModel<T>, Array<T>>
     allowMultipleSelection: boolean;
     toggleSelectedFile: Action<FileManagerModel<T>, T>;
-    filesMiddlewares: Array<Function>,
-    addFilesMiddleware: Action<FileManagerModel<T>, Function>,
-    removeFilesMiddleware: Action<FileManagerModel<T>, Function>,
     applyFileActions: Thunk<FileManagerModel<T>, FileActionPayload>,
-    fetchFiles: Action<FileManagerModel<T>, Array<T>>
+    fetchFiles: Action<FileManagerModel<T>, Array<T>>,
+    currentPath: string,
+    setCurrentPath: Action<FileManagerModel<T>, string>
 }
 
-export function createFileManagerStore<T>(
+export function createFileManagerStore<T extends FileType>(
     files: Array<T> = [],
     allowMultipleSelection: boolean,
     fileActions: Array<FileActionType<T>> = []
@@ -33,6 +38,16 @@ export function createFileManagerStore<T>(
 
     const {addAction, dispatchActionFromType} = createFileActionsManager<T>();
     fileActions.forEach(action=>addAction(action.type, action.callback));
+
+    const {addFilter, applyFilters} = createFileFiltersManager<T>();
+    getDefaultFileFilters<T>().forEach(filter=>addFilter(filter));
+
+    files = files.map((file:T) =>{
+        if(!file.path){
+            file.path = "/";
+        }
+        return file;
+    })
 
     const fileManagerModel: FileManagerModel<T> = {
         files: [...files],
@@ -43,12 +58,7 @@ export function createFileManagerStore<T>(
         }),
         filteredFiles: computed(state => {
             let computedFiles = [...state.files];
-
-            state.filesMiddlewares.forEach(middleware => {
-                computedFiles = middleware(computedFiles);
-            })
-
-            return computedFiles;
+            return applyFilters(computedFiles, state);
         }),
         allowMultipleSelection: allowMultipleSelection,
         selectedFiles: [] as Array<T>,
@@ -70,24 +80,17 @@ export function createFileManagerStore<T>(
 
             return newState;
         }),
-        filesMiddlewares: [] as Array<Function>,
-        addFilesMiddleware: action((state: State<FileManagerModel<T>>, middleware: Function) => {
-            const newState = {...state};
-            newState.filesMiddlewares = [...newState.filesMiddlewares, middleware];
-            return newState;
-        }),
-        removeFilesMiddleware: action((state: State<FileManagerModel<T>>, middleware: Function) => {
-            const newState = {...state};
-            if (arrayHas<Function>(state.filesMiddlewares, middleware)) {
-                newState.filesMiddlewares = arrayRemove<Function>(newState.filesMiddlewares, middleware);
-            }
-            return newState;
-        }),
         applyFileActions: thunk((actions, payload: FileActionPayload, {getState}) => {
             dispatchActionFromType(payload.type, payload.payload, {
                 actions: actions,
                 state: getState()
             })
+        }),
+        currentPath: "/",
+        setCurrentPath: action((state: State<FileManagerModel<T>>, path: string) => {
+            const newState = {...state};
+            newState.currentPath = path;
+            return newState;
         }),
     };
     return createStore(fileManagerModel, {disableImmer: true});

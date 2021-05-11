@@ -2,7 +2,7 @@ import React from "react";
 
 import {arrayHas} from "../helpers";
 import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
-import {FileManagerModel} from "../store/filemanager-store";
+import {FileManagerModel, FileType} from "../store/filemanager-store";
 
 interface FileListProps {
     child: React.ElementType
@@ -13,7 +13,7 @@ interface FileListProps {
  * Display list of files
  * @param {JSX.Element} child - must be passed to display the thumbnail
  */
-function FileList<T>({child}: FileListProps) {
+function FileList<T extends FileType>({child}: FileListProps) {
 
     const files = useStoreState((state: State<FileManagerModel<T>>) => state.filteredFiles);
     const selectedFiles = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
