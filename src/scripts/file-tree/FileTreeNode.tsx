@@ -23,12 +23,14 @@ export function FileTreeNode({node, onClick, currentPath}: FileTreeNodeProps) {
     }
 
     return (
-        <div className={"file-source-tree__node" + (open ? " is-open" : "") + ((currentPath === node.path) ? " is-selected" : "")}>
+        <div className={
+            "file-source-tree__node" + (open ? " is-open" : "") + ((currentPath === node.path) ? " is-selected" : "")
+        }>
             <div className="file-source-tree__label">
                 {node.children && (
                     <button
                         className="file-source-tree__arrow"
-                        onClick={()=>toggleOpen()}
+                        onClick={() => toggleOpen()}
                     />
                 )}
                 <button

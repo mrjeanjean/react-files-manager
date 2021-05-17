@@ -4,7 +4,7 @@ import {StoreProvider} from "easy-peasy";
 import {createFileManagerStore} from "../store/filemanager-store";
 import {FileActionType} from "../actions/actions.types";
 
-interface FileManagerProps<T>{
+interface FileManagerProps<T> {
     files: Array<T>,
     allowMultipleSelection?: boolean,
     children: Array<JSX.Element>,
@@ -14,7 +14,7 @@ interface FileManagerProps<T>{
 /**
  * Main entry of file manager. Must be used as a wrapper around all file manager.
  */
-function FileManager<T>({files, allowMultipleSelection = false, children, fileActions}:FileManagerProps<T>) {
+function FileManager<T>({files, allowMultipleSelection = false, children, fileActions}: FileManagerProps<T>) {
 
     const store = createFileManagerStore<T>(
         files,

@@ -14,7 +14,7 @@ interface FileTreeProps {
 export default function FileTree<T extends { path: string }>({fileTree}: FileTreeProps) {
 
     const currentPath = useStoreState((state: State<FileManagerModel<T>>) => state.currentPath);
-    const setCurrentPath = useStoreActions((store:Actions<FileManagerModel<T>>)=>store.setCurrentPath);
+    const setCurrentPath = useStoreActions((store: Actions<FileManagerModel<T>>) => store.setCurrentPath);
 
     return (
         <div className="file-source-tree">

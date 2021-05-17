@@ -15,7 +15,7 @@ import {createFileFiltersManager} from "../filters/create-file-filters-manager";
 import {getDefaultFileFilters} from "../filters/default-file-filters";
 
 export interface FileType {
-    path ?: string
+    path?: string
 }
 
 export interface FileManagerModel<T extends FileType> {
@@ -37,13 +37,13 @@ export function createFileManagerStore<T extends FileType>(
 ) {
 
     const {addAction, dispatchActionFromType} = createFileActionsManager<T>();
-    fileActions.forEach(action=>addAction(action.type, action.callback));
+    fileActions.forEach(action => addAction(action.type, action.callback));
 
     const {addFilter, applyFilters} = createFileFiltersManager<T>();
-    getDefaultFileFilters<T>().forEach(filter=>addFilter(filter));
+    getDefaultFileFilters<T>().forEach(filter => addFilter(filter));
 
-    files = files.map((file:T) =>{
-        if(!file.path){
+    files = files.map((file: T) => {
+        if (!file.path) {
             file.path = "/";
         }
         return file;

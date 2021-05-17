@@ -8,6 +8,6 @@ export function arrayRemove<T>(collection: Array<T>, item: T) {
     })
 }
 
-export function withPlural(collection: Array<any>, singular: string, plural: string){
+export function withPlural(collection: Array<any>, singular: string, plural: string) {
     return collection.length > 1 ? plural : singular;
 }

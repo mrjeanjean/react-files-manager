@@ -3,8 +3,8 @@ import {Actions, State, useStoreActions, useStoreState} from "easy-peasy";
 import {FileManagerModel} from "../store/filemanager-store";
 import {FileManagerAction} from "../actions/actions.types";
 
-export default function FileManagerFooter<T>(){
-    const applyFileActions = useStoreActions((store:Actions<FileManagerModel<T>>)=>store.applyFileActions);
+export default function FileManagerFooter<T>() {
+    const applyFileActions = useStoreActions((store: Actions<FileManagerModel<T>>) => store.applyFileActions);
     const selectedFiles = useStoreState((state: State<FileManagerModel<T>>) => state.selectedFiles);
 
     return (
@@ -12,9 +12,11 @@ export default function FileManagerFooter<T>(){
             <div className="file-manager__actions">
                 <button
                     type="button"
-                    onClick={()=>applyFileActions({type: FileManagerAction.selectFiles, payload: selectedFiles})}
+                    onClick={() => applyFileActions({type: FileManagerAction.selectFiles, payload: selectedFiles})}
                     className="button--action file-actions__button"
-                >Selectionner</button>
+                >
+                    Selectionner
+                </button>
             </div>
         </div>
     )
