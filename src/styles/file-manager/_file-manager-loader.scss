@@ -1,0 +1,45 @@
+.file-manager__loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background-color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-manager__loader__inner {
+  position: relative;
+
+  width: 200px;
+  height: 200px;
+}
+
+.file-manager__loader__inner div {
+  width: 100%;
+  height: 100%;
+  box-sizing: content-box;
+  position: absolute;
+  opacity: 1;
+  border-radius: 50%;
+  box-shadow: inset var(--file-manager-loader-color) 0 0 0 var(--file-manager-loader-thickness);
+  animation: ripple-animation 1000ms cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.file-manager__loader__inner div:nth-child(2) {
+  animation-delay: -500ms;
+}
+
+@keyframes ripple-animation {
+  0% {
+    opacity: 1;
+    transform: scale(0.2)
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1)
+  }
+}

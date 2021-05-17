@@ -5,21 +5,21 @@ import {FileManagerAction, FileManagerStoreData} from "./actions.types";
  * used to dispatch store actions through all listeners
  */
 export function createFileActionsManager<T>() {
-    const fileActions: Map<string, Array<Function>> = new Map<string, Array<Function>>();
+    const fileActionHandlers: Map<string, Array<Function>> = new Map<string, Array<Function>>();
 
-    const addAction = (type: string | FileManagerAction, callback: Function) => {
-        if (!fileActions.has(type)) {
-            fileActions.set(type, []);
+    const addActionHandler = (type: string | FileManagerAction, callback: Function) => {
+        if (!fileActionHandlers.has(type)) {
+            fileActionHandlers.set(type, []);
         }
 
-        let currentActions = fileActions.get(type) ?? [];
+        let currentActions = fileActionHandlers.get(type) ?? [];
 
-        fileActions.set(type, [
+        fileActionHandlers.set(type, [
             ...currentActions,
             callback
         ]);
 
-        return fileActions;
+        return fileActionHandlers;
     }
 
     const dispatchActionFromType = (
@@ -27,14 +27,14 @@ export function createFileActionsManager<T>() {
         payload: any,
         storeData: FileManagerStoreData<T>
     ) => {
-        let actionsFromType = fileActions.get(type) ?? [];
+        let actionsFromType = fileActionHandlers.get(type) ?? [];
         actionsFromType.forEach(callback => {
             callback(payload, storeData);
         })
     }
 
     return {
-        addAction,
+        addActionHandler,
         dispatchActionFromType
     }
 }

@@ -8,7 +8,8 @@ import FileViewer from "./components/FileViewer";
 import FileManagerBody from "./components/FileManagerBody";
 import FileManagerFooter from "./components/FileManagerFooter";
 import FileTree from './file-tree/FileTree';
-import {FileActionType, FileManagerAction} from "./actions/actions.types";
+import {FileActionHandler, FileManagerAction} from "./actions/actions.types";
+import FileManagerHeader from "./components/FileManagerHeader";
 
 export interface IFile {
     url: string,
@@ -16,17 +17,19 @@ export interface IFile {
     path?: string
 }
 
+export {default as FileManager} from './components/FileManager';
+
 const originalFiles: Array<IFile> = [
     {url: "https://picsum.photos/id/350/200/300", path: "/pictures/"},
     {url: "https://picsum.photos/id/351/250/300", path: "/pictures/"},
     {url: "https://picsum.photos/id/352/300/200", path: "/pictures/2021/"},
     {url: "https://picsum.photos/id/353/300/300", path: "/pictures/2021/may/"},
-    {url: "https://picsum.photos/id/353/300/300", path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", path: "/"},
-    {url: "https://picsum.photos/id/353/300/300", path: "/"},
-    {url: "https://picsum.photos/id/353/300/150", path: "/"},
+    {url: "https://picsum.photos/id/25/300/300", path: "/"},
+    {url: "https://picsum.photos/id/160/300/300", path: "/"},
+    {url: "https://picsum.photos/id/202/300/300", path: "/"},
+    {url: "https://picsum.photos/id/87/300/300", path: "/"},
+    {url: "https://picsum.photos/id/99/300/300", path: "/"},
+    {url: "https://picsum.photos/id/56/300/150", path: "/"},
     {url: "https://picsum.photos/id/353/300/150", path: "/"},
     {url: "https://picsum.photos/id/353/300/150", path: "/"},
     {url: "https://picsum.photos/id/353/300/150", path: "/"},
@@ -38,6 +41,32 @@ const originalFiles: Array<IFile> = [
     {url: "https://picsum.photos/id/353/300/150", path: "/"},
     {url: "https://picsum.photos/id/354/200/300", path: "/files/"}
 ]
+
+const filesWithoutPath: Array<IFile> = [
+    {url: "https://picsum.photos/id/350/200/300"},
+    {url: "https://picsum.photos/id/351/250/300"},
+    {url: "https://picsum.photos/id/352/300/200"},
+    {url: "https://picsum.photos/id/353/300/300"},
+    {url: "https://picsum.photos/id/25/300/300"},
+    {url: "https://picsum.photos/id/160/300/300"},
+    {url: "https://picsum.photos/id/202/300/300"},
+    {url: "https://picsum.photos/id/87/300/300"},
+    {url: "https://picsum.photos/id/99/300/300"},
+    {url: "https://picsum.photos/id/56/300/150"},
+    {url: "https://picsum.photos/id/353/300/150"},
+    {url: "https://picsum.photos/id/100/300/150"},
+    {url: "https://picsum.photos/id/353/300/150"},
+    {url: "https://picsum.photos/id/200/300/150"},
+    {url: "https://picsum.photos/id/353/300/150"},
+    {url: "https://picsum.photos/id/230/300/150"},
+    {url: "https://picsum.photos/id/353/300/150"},
+    {url: "https://picsum.photos/id/360/300/150"},
+    {url: "https://picsum.photos/id/111/300/150"},
+    {url: "https://picsum.photos/id/378/200/300"},
+    {url: "https://picsum.photos/id/600/200/300"}
+]
+
+
 
 const fileTree = {
     path: "/",
@@ -84,7 +113,7 @@ function Image({file}: { file?: IFile }) {
     )
 }
 
-const fileActions: Array<FileActionType<IFile>> = [
+const fileActionHandlers: Array<FileActionHandler<IFile>> = [
     {
         type: FileManagerAction.selectFiles,
         callback: (data) => {
@@ -93,8 +122,13 @@ const fileActions: Array<FileActionType<IFile>> = [
     },
     {
         type: FileManagerAction.deleteFiles,
-        callback: (data) => {
+        callback: (data, store) => {
+            store.actions.setLoading(true);
             console.log("ON REMOVE DES IMAGES !", data);
+
+            setTimeout(()=>{
+                store.actions.setLoading(false);
+            }, 2000);
         }
     }
 ]
@@ -105,12 +139,13 @@ function Main() {
             <FileManager<IFile>
                 files={originalFiles}
                 allowMultipleSelection={false}
-                fileActions={fileActions}
+                fileActionHandlers={fileActionHandlers}
             >
+                <FileManagerHeader/>
                 <FileManagerBody>
                     <FileTree fileTree={fileTree}/>
                     <FileList child={Image}/>
-                    <FileViewer/>
+                    <FileViewer child={Image}/>
                 </FileManagerBody>
 
                 <FileManagerFooter/>

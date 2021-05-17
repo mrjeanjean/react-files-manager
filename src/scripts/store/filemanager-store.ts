@@ -9,7 +9,7 @@ import {
     thunk,
 } from "easy-peasy";
 import {arrayHas, arrayRemove} from "../helpers";
-import {FileActionPayload, FileActionType} from "../actions/actions.types";
+import {FileActionHandler, FileActionPayload} from "../actions/actions.types";
 import {createFileActionsManager} from "../actions/create-file-actions-manager";
 import {createFileFiltersManager} from "../filters/create-file-filters-manager";
 import {getDefaultFileFilters} from "../filters/default-file-filters";
@@ -27,17 +27,19 @@ export interface FileManagerModel<T extends FileType> {
     applyFileActions: Thunk<FileManagerModel<T>, FileActionPayload>,
     fetchFiles: Action<FileManagerModel<T>, Array<T>>,
     currentPath: string,
-    setCurrentPath: Action<FileManagerModel<T>, string>
+    setCurrentPath: Action<FileManagerModel<T>, string>,
+    isLoading: boolean,
+    setLoading: Action<FileManagerModel<T>, boolean>,
 }
 
 export function createFileManagerStore<T extends FileType>(
     files: Array<T> = [],
     allowMultipleSelection: boolean,
-    fileActions: Array<FileActionType<T>> = []
+    fileActionHandlers: Array<FileActionHandler<T>> = []
 ) {
 
-    const {addAction, dispatchActionFromType} = createFileActionsManager<T>();
-    fileActions.forEach(action => addAction(action.type, action.callback));
+    const {addActionHandler, dispatchActionFromType} = createFileActionsManager<T>();
+    fileActionHandlers.forEach(actionHandler => addActionHandler(actionHandler.type, actionHandler.callback));
 
     const {addFilter, applyFilters} = createFileFiltersManager<T>();
     getDefaultFileFilters<T>().forEach(filter => addFilter(filter));
@@ -92,6 +94,12 @@ export function createFileManagerStore<T extends FileType>(
             newState.currentPath = path;
             return newState;
         }),
+        isLoading: false,
+        setLoading: action((state: State<FileManagerModel<T>>, isLoading: boolean) => {
+            const newState = {...state};
+            newState.isLoading = isLoading;
+            return newState;
+        })
     };
     return createStore(fileManagerModel, {disableImmer: true});
 }

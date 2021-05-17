@@ -1,9 +1,32 @@
 .file-viewer{
   background-color: var(--file-source-tree-color);
-  //border-left: 2px solid var(--file-manager-border-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-basis: 280px;
+  width: 280px;
+  padding: 1rem;
+}
+
+.file-viewer__items-wrapper{
+  height: 250px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.file-viewer__item{
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  box-shadow: rgba(0,0,0,0.2) 6px 0 3px;
+  background-color: var(--file-manager-medium-color);
+}
+
+.file-viewer__item img{
+  height: 100%;
+  width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.file-viewer--multiple-images-selected .file-viewer__item img{
+  object-fit: cover;
 }

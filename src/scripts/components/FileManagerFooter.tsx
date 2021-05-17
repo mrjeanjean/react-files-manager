@@ -15,7 +15,7 @@ export default function FileManagerFooter<T>() {
                     onClick={() => applyFileActions({type: FileManagerAction.selectFiles, payload: selectedFiles})}
                     className="button--action file-actions__button"
                 >
-                    Selectionner
+                    Select
                 </button>
             </div>
         </div>

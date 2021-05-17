@@ -1,9 +1,17 @@
+.file-manager,
+.file-manager *,
+.file-manager *:before,
+.file-manager *:after{
+  box-sizing: border-box;
+}
+
 .file-manager{
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
   color: var(--file-manager-text-color);
+  position: relative;
 }
 
 .file-manager__body{

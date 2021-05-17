@@ -1,5 +1,5 @@
 {
-  "name": "react-file-manager",
+  "name": "@six-design/file-manager",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

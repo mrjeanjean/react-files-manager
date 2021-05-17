@@ -11,12 +11,12 @@ export type FileActionPayload = {
     payload: any
 }
 
+export type FileActionHandler<T> = {
+    type: string,
+    callback: (data: any, store: FileManagerStoreData<T>) => void
+}
+
 export type FileManagerStoreData<T> = {
     actions: Actions<FileManagerModel<T>>,
     state: State<FileManagerModel<T>>
-}
-
-export type FileActionType<T> = {
-    type: string,
-    callback: (data: any, store: FileManagerStoreData<T>) => void
 }
